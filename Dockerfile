@@ -1,5 +1,7 @@
 FROM jarischaefer/baseimage-ubuntu:1.1
 
+ARG COMPOSER_VERSION=c1ad3667731e9c5c1a21e5835c7e6a7eedc2e1fe
+
 RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
 	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main' > /etc/apt/sources.list.d/ondrej-php7.list && \
 	echo 'deb http://ppa.launchpad.net/nginx/development/ubuntu xenial main' > /etc/apt/sources.list.d/nginx.list && \
@@ -40,8 +42,8 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 		python-memcache \
 		sudo \
 		curl \
-		composer \
 		ipmitool && \
+	curl -sSL -o - https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_VERSION}/web/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
 	rm -rf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/* && \
 	sed -i 's/pm.max_children = 5/pm.max_children = 24/g' /etc/php/7.2/fpm/pool.d/www.conf && \
 	sed -i 's/pm.start_servers = 2/pm.start_servers = 4/g' /etc/php/7.2/fpm/pool.d/www.conf && \
