@@ -1,6 +1,6 @@
-FROM jarischaefer/baseimage-ubuntu:1.1
+FROM jarischaefer/baseimage-ubuntu:1.2
 
-ARG COMPOSER_VERSION=c1ad3667731e9c5c1a21e5835c7e6a7eedc2e1fe
+ARG COMPOSER_VERSION=58c3cc59978616c132b5fed9b09314e24cb60462
 
 RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
 	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main' > /etc/apt/sources.list.d/ondrej-php7.list && \
