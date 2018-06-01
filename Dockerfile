@@ -1,6 +1,6 @@
 FROM jarischaefer/baseimage-ubuntu:1.2
 
-ARG COMPOSER_VERSION=58c3cc59978616c132b5fed9b09314e24cb60462
+ARG COMPOSER_VERSION=fe44bd5b10b89fbe7e7fc70e99e5d1a344a683dd
 
 RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
 	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main' > /etc/apt/sources.list.d/ondrej-php7.list && \
@@ -16,6 +16,7 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 		php7.2-curl \
 		php7.2-opcache \
 		php7.2-ldap \
+		php7.2-mbstring \
 		php7.2-memcached \
 		php7.2-snmp \
 		php7.2-xml \
@@ -42,7 +43,8 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 		python-memcache \
 		sudo \
 		curl \
-		ipmitool && \
+		ipmitool \
+		acl && \
 	curl -sSL -o - https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_VERSION}/web/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
 	rm -rf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/* && \
 	sed -i 's/pm.max_children = 5/pm.max_children = 24/g' /etc/php/7.2/fpm/pool.d/www.conf && \
