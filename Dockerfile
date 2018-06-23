@@ -44,7 +44,8 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 		sudo \
 		curl \
 		ipmitool \
-		acl && \
+		acl \
+		vim-tiny && \
 	curl -sSL -o - https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_VERSION}/web/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
 	rm -rf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/* && \
 	sed -i 's/pm.max_children = 5/pm.max_children = 24/g' /etc/php/7.2/fpm/pool.d/www.conf && \
