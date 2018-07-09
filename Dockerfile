@@ -55,7 +55,7 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 	sed -i 's/;clear_env/clear_env/g' /etc/php/7.2/fpm/pool.d/www.conf && \
 	useradd librenms -d /opt/librenms -M -r && \
 	usermod -a -G librenms www-data && \
-	chmod u+s /usr/bin/fping /usr/bin/fping6 /usr/lib/nagios/plugins/check_icmp && \
+	chmod u+s /usr/bin/fping /usr/bin/fping6 /usr/lib/nagios/plugins/check_dhcp /usr/lib/nagios/plugins/check_icmp && \
 	apt-get -yq autoremove --purge && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/* && \
