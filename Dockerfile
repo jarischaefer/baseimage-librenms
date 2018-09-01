@@ -1,12 +1,12 @@
-FROM jarischaefer/baseimage-ubuntu:1.2
+FROM jarischaefer/baseimage-ubuntu:2.0
 
-ARG COMPOSER_VERSION=fe44bd5b10b89fbe7e7fc70e99e5d1a344a683dd
+ARG COMPOSER_VERSION=7cf90ec1d9540d586f6ac80babbc342033adf6b6
 
 RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
-	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main' > /etc/apt/sources.list.d/ondrej-php7.list && \
-	echo 'deb http://ppa.launchpad.net/nginx/development/ubuntu xenial main' > /etc/apt/sources.list.d/nginx.list && \
+	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main' > /etc/apt/sources.list.d/ondrej-php7.list && \
+	echo 'deb http://ppa.launchpad.net/nginx/development/ubuntu bionic main' > /etc/apt/sources.list.d/nginx.list && \
 	apt-get update && \
-	apt-get -yq install --no-install-recommends \
+	DEBIAN_FRONTEND=noninteractive apt-get -yq install --no-install-recommends \
 		dnsutils \
 		nginx \
 		php7.2-cli \
@@ -23,8 +23,6 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 		php7.2-zip \
 		php-imagick \
 		php-pear \
-		php-net-ipv4 \
-		php-net-ipv6 \
 		snmp \
 		graphviz \
 		fping \
@@ -46,6 +44,8 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 		ipmitool \
 		acl \
 		vim-tiny && \
+	pear install Net_IPv4 && \
+	pear install Net_IPv6 && \
 	curl -sSL -o - https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_VERSION}/web/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
 	rm -rf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/* && \
 	sed -i 's/pm.max_children = 5/pm.max_children = 24/g' /etc/php/7.2/fpm/pool.d/www.conf && \
