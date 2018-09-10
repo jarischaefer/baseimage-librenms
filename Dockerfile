@@ -56,6 +56,7 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 	useradd librenms --home-dir /opt/librenms --system --shell /bin/bash && \
 	usermod -a -G librenms www-data && \
 	chmod u+s /usr/bin/fping /usr/bin/fping6 /usr/lib/nagios/plugins/check_dhcp /usr/lib/nagios/plugins/check_icmp && \
+	sed -i 's/session.*required.*pam_loginuid.so//g' /etc/pam.d/cron && \
 	apt-get -yq autoremove --purge && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/* && \
