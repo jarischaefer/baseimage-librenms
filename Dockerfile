@@ -43,7 +43,8 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 		curl \
 		ipmitool \
 		acl \
-		vim-tiny && \
+		vim-tiny \
+		unzip && \
 	pear install Net_IPv4 && \
 	pear install Net_IPv6 && \
 	curl -sSL -o - https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_VERSION}/web/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
