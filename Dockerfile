@@ -1,6 +1,6 @@
 FROM jarischaefer/baseimage-ubuntu:2.1
 
-ARG COMPOSER_VERSION=d3e09029468023aa4e9dcd165e9b6f43df0a9999
+ARG COMPOSER_VERSION=da7be05fa1c9f68b9609726451d1aaac7dd832cb
 
 RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
 	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main' > /etc/apt/sources.list.d/ondrej-php7.list && \
