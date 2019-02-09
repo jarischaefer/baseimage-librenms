@@ -6,6 +6,7 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main' > /etc/apt/sources.list.d/ondrej-php7.list && \
 	echo 'deb http://ppa.launchpad.net/nginx/development/ubuntu bionic main' > /etc/apt/sources.list.d/nginx.list && \
 	apt-get update && \
+	DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrade && \
 	DEBIAN_FRONTEND=noninteractive apt-get -yq install --no-install-recommends \
 		dnsutils \
 		nginx \
