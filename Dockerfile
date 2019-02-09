@@ -45,8 +45,12 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 		acl \
 		vim-tiny \
 		unzip && \
-	pear install Net_IPv4 && \
-	pear install Net_IPv6 && \
+	curl -sSL -o - https://github.com/pear/Net_IPv4/archive/v1.3.5.tar.gz | tar -xz -C /tmp && \
+	cd /tmp/Net_IPv4-1.3.5 && \
+	pear install package.xml && \
+	curl -sSL -o - https://github.com/pear/Net_IPv6/archive/174b5756d87627590a3c1624657bd32905addc4f.tar.gz | tar -xz -C /tmp && \
+	cd /tmp/Net_IPv6-174b5756d87627590a3c1624657bd32905addc4f && \
+	pear install package.xml && \
 	curl -sSL -o - https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_VERSION}/web/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
 	rm -rf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/* && \
 	sed -i 's/pm.max_children = 5/pm.max_children = 24/g' /etc/php/7.2/fpm/pool.d/www.conf && \
