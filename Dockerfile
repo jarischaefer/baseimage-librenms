@@ -1,4 +1,4 @@
-FROM jarischaefer/baseimage-ubuntu:2.2
+FROM jarischaefer/baseimage-ubuntu:2.3
 
 ARG COMPOSER_VERSION=cb19f2aa3aeaa2006c0cd69a7ef011eb31463067
 
