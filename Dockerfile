@@ -1,8 +1,9 @@
 FROM jarischaefer/baseimage-ubuntu:2.4
 
-ARG COMPOSER_VERSION=ba13e3fc70f1c66250d1ea7ea4911d593aa1dba5
+ARG COMPOSER_VERSION=ba1f97192942f1d0de9557258c5009ac6bd7b17d
 
-RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
+RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
 	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main' > /etc/apt/sources.list.d/ondrej-php7.list && \
 	echo 'deb http://ppa.launchpad.net/nginx/development/ubuntu bionic main' > /etc/apt/sources.list.d/nginx.list && \
 	apt-get update && \
@@ -10,18 +11,18 @@ RUN	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C &
 	DEBIAN_FRONTEND=noninteractive apt-get -yq install --no-install-recommends \
 		dnsutils \
 		nginx \
-		php7.3-cli \
-		php7.3-fpm \
-		php7.3-mysql \
-		php7.3-gd \
-		php7.3-curl \
-		php7.3-opcache \
-		php7.3-ldap \
-		php7.3-mbstring \
-		php7.3-memcached \
-		php7.3-snmp \
-		php7.3-xml \
-		php7.3-zip \
+		php7.4-cli \
+		php7.4-fpm \
+		php7.4-mysql \
+		php7.4-gd \
+		php7.4-curl \
+		php7.4-opcache \
+		php7.4-ldap \
+		php7.4-mbstring \
+		php7.4-memcached \
+		php7.4-snmp \
+		php7.4-xml \
+		php7.4-zip \
 		php-imagick \
 		php-pear \
 		snmp \
