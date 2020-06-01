@@ -46,7 +46,8 @@ RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 		ipmitool \
 		acl \
 		vim-tiny \
-		unzip && \
+		unzip \
+		python3-pip && \
 	curl -sSL -o - https://github.com/pear/Net_IPv4/archive/v1.3.5.tar.gz | tar -xz -C /tmp && \
 	cd /tmp/Net_IPv4-1.3.5 && \
 	pear install package.xml && \
