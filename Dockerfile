@@ -48,7 +48,14 @@ RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 		vim-tiny \
 		unzip \
 		python3-pip \
-		python3-setuptools && \
+		python3-setuptools \
+		libodbc1 \
+		odbcinst && \
+	curl -sSL -o - https://github.com/microsoft/msphpsql/releases/download/v5.8.1/Ubuntu1804-7.4.tar | tar -x -C /tmp && \
+    mv /tmp/Ubuntu1804-7.4/php_sqlsrv_74_nts.so /usr/lib/php/20190902/mssql.so && \
+    echo 'extension=mssql.so' > /etc/php/7.4/mods-available/mssql.ini && \
+    ln -s /etc/php/7.4/mods-available/mssql.ini /etc/php/7.4/cli/conf.d/30-mssql.ini && \
+    ln -s /etc/php/7.4/mods-available/mssql.ini /etc/php/7.4/fpm/conf.d/30-mssql.ini && \
 	curl -sSL -o - https://github.com/pear/Net_IPv4/archive/v1.3.5.tar.gz | tar -xz -C /tmp && \
 	cd /tmp/Net_IPv4-1.3.5 && \
 	pear install package.xml && \
