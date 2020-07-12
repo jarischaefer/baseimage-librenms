@@ -1,6 +1,6 @@
 FROM jarischaefer/baseimage-ubuntu:2.4
 
-ARG COMPOSER_VERSION=ba1f97192942f1d0de9557258c5009ac6bd7b17d
+ARG COMPOSER_VERSION=3e9dc060e4ef32337e721d952865e2d705581bf1
 
 RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
