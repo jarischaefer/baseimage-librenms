@@ -33,20 +33,22 @@ RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 		mtr-tiny \
 		nagios-plugins \
 		nmap \
-		python-mysqldb \
 		rrdcached \
 		rrdtool \
 		sendmail \
 		smbclient \
 		git \
-		python-ipaddress \
-		python-memcache \
 		sudo \
 		curl \
 		ipmitool \
 		acl \
 		vim-tiny \
 		unzip \
+		python-mysqldb \
+		python-ipaddress \
+        python-memcache \
+		python3-mysqldb \
+		python3-memcache \
 		python3-pip \
 		python3-setuptools \
 		libodbc1 \
