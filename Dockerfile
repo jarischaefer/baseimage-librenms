@@ -1,6 +1,8 @@
 FROM jarischaefer/baseimage-ubuntu:2.4-1
 
-ARG COMPOSER_VERSION=3e9dc060e4ef32337e721d952865e2d705581bf1
+ARG COMPOSER_VERSION=1.10.17
+ARG NET_IPV4_VERSION=1.3.5
+ARG NET_IPV6_VERSION=174b5756d87627590a3c1624657bd32905addc4f
 
 RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
@@ -51,6 +53,7 @@ RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 		python3-memcache \
 		python3-pip \
 		python3-setuptools \
+		python3-psutil \
 		libodbc1 \
 		odbcinst \
 		snmptrapd && \
@@ -59,18 +62,23 @@ RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
     echo 'extension=mssql.so' > /etc/php/7.4/mods-available/mssql.ini && \
     ln -s /etc/php/7.4/mods-available/mssql.ini /etc/php/7.4/cli/conf.d/30-mssql.ini && \
     ln -s /etc/php/7.4/mods-available/mssql.ini /etc/php/7.4/fpm/conf.d/30-mssql.ini && \
-	curl -sSL -o - https://github.com/pear/Net_IPv4/archive/v1.3.5.tar.gz | tar -xz -C /tmp && \
-	cd /tmp/Net_IPv4-1.3.5 && \
+    \
+	curl -sSL -o - https://github.com/pear/Net_IPv4/archive/v${NET_IPV4_VERSION}.tar.gz | tar -xz -C /tmp && \
+	cd "/tmp/Net_IPv4-${NET_IPV4_VERSION}" && \
 	pear install package.xml && \
-	curl -sSL -o - https://github.com/pear/Net_IPv6/archive/174b5756d87627590a3c1624657bd32905addc4f.tar.gz | tar -xz -C /tmp && \
-	cd /tmp/Net_IPv6-174b5756d87627590a3c1624657bd32905addc4f && \
+	curl -sSL -o - https://github.com/pear/Net_IPv6/archive/${NET_IPV6_VERSION}.tar.gz | tar -xz -C /tmp && \
+	cd "/tmp/Net_IPv6-${NET_IPV6_VERSION}" && \
 	pear install package.xml && \
-	curl -sSL -o - https://raw.githubusercontent.com/composer/getcomposer.org/${COMPOSER_VERSION}/web/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+	\
+	curl -sSL -o /usr/local/bin/composer "https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar" && \
+	chmod +x /usr/local/bin/composer && \
+	\
 	rm -rf /etc/nginx/sites-available/* /etc/nginx/sites-enabled/* && \
 	useradd librenms --home-dir /opt/librenms --system --shell /bin/bash && \
 	usermod -a -G librenms www-data && \
 	chmod u+s /usr/bin/fping /usr/bin/fping6 /usr/lib/nagios/plugins/check_dhcp /usr/lib/nagios/plugins/check_icmp && \
 	sed -i 's/session.*required.*pam_loginuid.so//g' /etc/pam.d/cron && \
+	\
 	apt-get -yq autoremove --purge && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/* && \
