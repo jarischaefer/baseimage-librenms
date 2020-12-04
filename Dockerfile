@@ -1,6 +1,6 @@
-FROM jarischaefer/baseimage-ubuntu:2.4-1
+FROM jarischaefer/baseimage-ubuntu:2.4-2
 
-ARG COMPOSER_VERSION=1.10.17
+ARG COMPOSER_VERSION=1.10.19
 ARG NET_IPV4_VERSION=1.3.5
 ARG NET_IPV6_VERSION=174b5756d87627590a3c1624657bd32905addc4f
 
@@ -56,7 +56,8 @@ RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 		python3-psutil \
 		libodbc1 \
 		odbcinst \
-		snmptrapd && \
+		snmptrapd \
+		mysql-client && \
 	curl -sSL -o - https://github.com/microsoft/msphpsql/releases/download/v5.8.1/Ubuntu1804-7.4.tar | tar -x -C /tmp && \
     mv /tmp/Ubuntu1804-7.4/php_sqlsrv_74_nts.so /usr/lib/php/20190902/mssql.so && \
     echo 'extension=mssql.so' > /etc/php/7.4/mods-available/mssql.ini && \
