@@ -1,13 +1,12 @@
-FROM jarischaefer/baseimage-ubuntu:2.4-2
+FROM jarischaefer/baseimage-ubuntu:3.0
 
-ARG COMPOSER_VERSION=1.10.19
+ARG COMPOSER_VERSION=1.10.20
 ARG NET_IPV4_VERSION=1.3.5
 ARG NET_IPV6_VERSION=174b5756d87627590a3c1624657bd32905addc4f
 
 RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C && \
-	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main' > /etc/apt/sources.list.d/ondrej-php7.list && \
-	echo 'deb http://ppa.launchpad.net/nginx/development/ubuntu bionic main' > /etc/apt/sources.list.d/nginx.list && \
+	echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu focal main' > /etc/apt/sources.list.d/ondrej-php.list && \
 	apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrade && \
 	DEBIAN_FRONTEND=noninteractive apt-get -yq install --no-install-recommends \
@@ -25,7 +24,7 @@ RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 		php7.4-snmp \
 		php7.4-xml \
 		php7.4-zip \
-		php-imagick \
+		php7.4-imagick \
 		php-pear \
 		snmp \
 		graphviz \
@@ -46,9 +45,7 @@ RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 		acl \
 		vim-tiny \
 		unzip \
-		python-mysqldb \
-		python-ipaddress \
-        python-memcache \
+        python3-ipaddr \
 		python3-mysqldb \
 		python3-memcache \
 		python3-pip \
@@ -58,8 +55,8 @@ RUN	echo 'LANG=C.UTF-8' > /etc/default/locale && \
 		odbcinst \
 		snmptrapd \
 		mysql-client && \
-	curl -sSL -o - https://github.com/microsoft/msphpsql/releases/download/v5.8.1/Ubuntu1804-7.4.tar | tar -x -C /tmp && \
-    mv /tmp/Ubuntu1804-7.4/php_sqlsrv_74_nts.so /usr/lib/php/20190902/mssql.so && \
+	curl -sSL -o - https://github.com/microsoft/msphpsql/releases/download/v5.9.0/Ubuntu2004-7.4.tar | tar -x -C /tmp && \
+    mv /tmp/Ubuntu2004-7.4/php_sqlsrv_74_nts.so /usr/lib/php/20190902/mssql.so && \
     echo 'extension=mssql.so' > /etc/php/7.4/mods-available/mssql.ini && \
     ln -s /etc/php/7.4/mods-available/mssql.ini /etc/php/7.4/cli/conf.d/30-mssql.ini && \
     ln -s /etc/php/7.4/mods-available/mssql.ini /etc/php/7.4/fpm/conf.d/30-mssql.ini && \
