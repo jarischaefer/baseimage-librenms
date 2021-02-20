@@ -1,0 +1,10 @@
+#!/bin/bash
+
+architecture=$(uname -m)
+
+if [ "x86_64" == "$architecture" ]; then
+	ln -sf /etc/php/7.4/mods-available/mssql.ini /etc/php/7.4/cli/conf.d/30-mssql.ini
+	ln -sf /etc/php/7.4/mods-available/mssql.ini /etc/php/7.4/fpm/conf.d/30-mssql.ini
+else
+	echo -e "\033[1;33mWARNING: MSPHPSQL is not available on ${architecture}\033[0m" >&2
+fi
