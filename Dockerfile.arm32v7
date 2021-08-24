@@ -1,4 +1,4 @@
-FROM --platform=linux/arm32v7 jarischaefer/baseimage-ubuntu:3.1-arm32v7
+FROM --platform=linux/arm32v7 jarischaefer/baseimage-ubuntu:3.1-1-arm32v7
 ADD qemu-arm-static /usr/bin
 
 ARG COMPOSER_VERSION

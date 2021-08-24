@@ -1,4 +1,4 @@
-FROM jarischaefer/baseimage-ubuntu:3.1
+FROM jarischaefer/baseimage-ubuntu:3.1-1
 
 ARG COMPOSER_VERSION
 ARG NET_IPV4_VERSION
