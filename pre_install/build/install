@@ -1,35 +1,51 @@
 #!/bin/bash -eu
 
-COMPOSER_VERSION=${COMPOSER_VERSION:-1.10.26}
+export DEBIAN_FRONTEND=noninteractive
+COMPOSER_VERSION=${COMPOSER_VERSION:-2.3.5}
 NET_IPV4_VERSION=${NET_IPV4_VERSION:-1.3.5}
 NET_IPV6_VERSION=${NET_IPV6_VERSION:-174b5756d87627590a3c1624657bd32905addc4f}
 
 echo 'LANG=C.UTF-8' > /etc/default/locale
 
-# Add PPAs
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C C300EE8C
-echo 'deb http://ppa.launchpad.net/ondrej/php/ubuntu focal main' > /etc/apt/sources.list.d/ondrej-php.list
+# Update dependencies
+apt update
+apt -yq dist-upgrade
 
-# Install dependencies
-apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrade
-DEBIAN_FRONTEND=noninteractive apt-get -yq install --no-install-recommends \
-	dnsutils \
+# PPAs
+apt -yq install software-properties-common
+LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
+apt -yq purge software-properties-common
+apt -yq autoremove --purge
+
+# Python
+apt -yq install --no-install-recommends \
+	python3-mysqldb \
+	python3-memcache \
+	python3-pip \
+	python3-setuptools \
+	python3-psutil \
+
+# nginx, PHP
+apt -yq install --no-install-recommends \
 	nginx \
-	php7.4-cli \
-	php7.4-fpm \
-	php7.4-mysql \
-	php7.4-gd \
-	php7.4-curl \
-	php7.4-opcache \
-	php7.4-ldap \
-	php7.4-mbstring \
-	php7.4-memcached \
-	php7.4-snmp \
-	php7.4-xml \
-	php7.4-zip \
-	php7.4-imagick \
-	php-pear \
+	php8.1-cli \
+	php8.1-fpm \
+	php8.1-mysql \
+	php8.1-gd \
+	php8.1-curl \
+	php8.1-opcache \
+	php8.1-ldap \
+	php8.1-mbstring \
+	php8.1-memcached \
+	php8.1-snmp \
+	php8.1-xml \
+	php8.1-zip \
+	php8.1-imagick \
+	php-pear
+
+# Other dependencies
+apt -yq install --no-install-recommends \
+	dnsutils \
 	snmp \
 	graphviz \
 	fping \
@@ -49,21 +65,15 @@ DEBIAN_FRONTEND=noninteractive apt-get -yq install --no-install-recommends \
 	acl \
 	vim-tiny \
 	unzip \
-	python3-ipaddr \
-	python3-mysqldb \
-	python3-memcache \
-	python3-pip \
-	python3-setuptools \
-	python3-psutil \
 	libodbc1 \
 	odbcinst \
 	snmptrapd \
 	mysql-client
 
 # Install MSSQL driver for PHP
-curl -sSL -o - https://github.com/microsoft/msphpsql/releases/download/v5.9.0/Ubuntu2004-7.4.tar | tar -x -C /tmp
-mv /tmp/Ubuntu2004-7.4/php_sqlsrv_74_nts.so /usr/lib/php/20190902/mssql.so
-echo 'extension=mssql.so' > /etc/php/7.4/mods-available/mssql.ini
+curl -sSL -o - https://github.com/microsoft/msphpsql/releases/download/v5.10.0/Ubuntu2110-8.1.tar | tar -x -C /tmp
+mv /tmp/Ubuntu2110-8.1/php_sqlsrv_81_nts.so /usr/lib/php/20210902/mssql.so
+echo 'extension=mssql.so' > /etc/php/8.1/mods-available/mssql.ini
 
 # Install Net_IPv4
 curl -sSL -o - https://github.com/pear/Net_IPv4/archive/v${NET_IPV4_VERSION}.tar.gz | tar -xz -C /tmp
@@ -89,8 +99,8 @@ usermod -a -G librenms www-data
 chmod u+s /usr/bin/fping /usr/bin/fping6 /usr/lib/nagios/plugins/check_dhcp /usr/lib/nagios/plugins/check_icmp
 
 # Cleanup
-apt-get -yq autoremove --purge
-apt-get clean
+apt -yq autoremove --purge
+apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/*
 rm -f /var/log/dpkg.log /var/log/alternatives.log /var/log/bootstrap.log
 rm -f /var/log/apt/history.log /var/log/apt/term.log
