@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 
 export DEBIAN_FRONTEND=noninteractive
-COMPOSER_VERSION=${COMPOSER_VERSION:-2.3.5}
+COMPOSER_VERSION=${COMPOSER_VERSION:-2.3.9}
 NET_IPV4_VERSION=${NET_IPV4_VERSION:-1.3.5}
 NET_IPV6_VERSION=${NET_IPV6_VERSION:-174b5756d87627590a3c1624657bd32905addc4f}
 
@@ -14,8 +14,6 @@ apt -yq dist-upgrade
 # PPAs
 apt -yq install software-properties-common
 LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
-apt -yq purge software-properties-common
-apt -yq autoremove --purge
 
 # Python
 apt -yq install --no-install-recommends \
@@ -99,6 +97,7 @@ usermod -a -G librenms www-data
 chmod u+s /usr/bin/fping /usr/bin/fping6 /usr/lib/nagios/plugins/check_dhcp /usr/lib/nagios/plugins/check_icmp
 
 # Cleanup
+apt -yq purge software-properties-common
 apt -yq autoremove --purge
 apt clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/*
