@@ -69,7 +69,7 @@ apt -yq install --no-install-recommends \
 	mysql-client
 
 # Install MSSQL driver for PHP
-curl -sSL -o - https://github.com/microsoft/msphpsql/releases/download/v5.10.0/Ubuntu2110-8.1.tar | tar -x -C /tmp
+curl -sSL -o - https://github.com/microsoft/msphpsql/releases/download/v5.10.1/Ubuntu2110-8.1.tar | tar -x -C /tmp
 mv /tmp/Ubuntu2110-8.1/php_sqlsrv_81_nts.so /usr/lib/php/20210902/mssql.so
 echo 'extension=mssql.so' > /etc/php/8.1/mods-available/mssql.ini
 
