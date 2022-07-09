@@ -1,3 +1,4 @@
 *
 !post_install
 !pre_install
+!qemu*
